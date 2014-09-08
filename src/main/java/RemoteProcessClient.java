@@ -1,4 +1,5 @@
-import model.*;
+import model2.*;
+import scala.Enumeration;
 
 import java.io.*;
 import java.net.Socket;
@@ -94,10 +95,10 @@ public final class RemoteProcessClient implements Closeable {
                     writeDouble(move.getSpeedUp());
                     writeDouble(move.getTurn());
                     writeEnum(move.getAction());
-                    if (move.getAction() == ActionType.PASS) {
+                    if (move.getAction() == ActionType.Pass()) {
                         writeDouble(move.getPassPower());
                         writeDouble(move.getPassAngle());
-                    } else if (move.getAction() == ActionType.SUBSTITUTE) {
+                    } else if (move.getAction() == ActionType.Substitute()) {
                         writeInt(move.getTeammateIndex());
                     }
                 }
@@ -165,9 +166,9 @@ public final class RemoteProcessClient implements Closeable {
 
         return new Hockeyist(
                 readLong(), readLong(), readInt(), readDouble(), readDouble(), readDouble(), readDouble(),
-                readDouble(), readDouble(), readDouble(), readDouble(), readBoolean(), readEnum(HockeyistType.class),
-                readInt(), readInt(), readInt(), readInt(), readDouble(), readEnum(HockeyistState.class),
-                readInt(), readInt(), readInt(), readInt(), readEnum(ActionType.class), readBoolean() ? readInt() : null
+                readDouble(), readDouble(), readDouble(), readDouble(), readBoolean(), HockeyistType.restore(readEnum()),
+                readInt(), readInt(), readInt(), readInt(), readDouble(), HockeyistState.restore(readEnum()),
+                readInt(), readInt(), readInt(), readInt(), ActionType.restore(readEnum()), readBoolean() ? readInt() : null
         );
     }
 
@@ -206,8 +207,16 @@ public final class RemoteProcessClient implements Closeable {
         return null;
     }
 
+    private int readEnum() throws IOException {
+        return readBytes(1)[0];
+    }
+
     private <E extends Enum> void writeEnum(E value) throws IOException {
         writeBytes(new byte[]{value == null ? (byte) -1 : (byte) value.ordinal()});
+    }
+
+    private <E extends Enumeration.Value> void writeEnum(E value) throws IOException {
+        writeBytes(new byte[]{value == null ? (byte) -1 : (byte) value.id()});
     }
 
     private String readString() throws IOException {

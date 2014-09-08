@@ -1,7 +1,7 @@
-import model.Game;
-import model.Hockeyist;
-import model.Move;
-import model.PlayerContext;
+import model2.Game;
+import model2.Hockeyist;
+import model2.Move;
+import model2.PlayerContext;
 
 import java.io.IOException;
 
@@ -38,7 +38,7 @@ public final class Runner {
             PlayerContext playerContext;
 
             while ((playerContext = remoteProcessClient.readPlayerContext()) != null) {
-                Hockeyist[] playerHockeyists = playerContext.getHockeyists();
+                Hockeyist[] playerHockeyists = playerContext.hockeyists();
                 if (playerHockeyists == null || playerHockeyists.length != teamSize) {
                     break;
                 }
@@ -50,8 +50,8 @@ public final class Runner {
 
                     Move move = new Move();
                     moves[hockeyistIndex] = move;
-                    strategies[playerHockeyist.getTeammateIndex()].move(
-                            playerHockeyist, playerContext.getWorld(), game, move
+                    strategies[playerHockeyist.teammateIndex()].move(
+                            playerHockeyist, playerContext.world(), game, move
                     );
                 }
 
