@@ -1,4 +1,4 @@
-package model2
+package model
 
 /**
  * Состояние хоккеиста.
@@ -9,7 +9,7 @@ object HockeyistState extends NullableEnumeration {
   /**
    * Хоккеист находится на игровом поле.
    */
-  val Active = Value("ACTIVE")
+  val Active = Value(0)
 
   /**
    * Хоккеист находится на игровом поле и делает замах клюшкой.
@@ -17,17 +17,17 @@ object HockeyistState extends NullableEnumeration {
    * Во время замаха стратегия не может управлять движением хоккеиста, а из действий доступны только
    * {@code ActionType.Strike} и {@code ActionType.CancelStrike}.
    */
-  val Swinging = Value("SWINGING")
+  val Swinging = Value(1)
 
   /**
    * Хоккеист находится на игровом поле, но сбит с ног.
    * Стратегия игрока не может им управлять.
    */
-  val KnockedDown = Value("KNOCKED_DOWN")
+  val KnockedDown = Value(2)
 
   /**
    * Хоккеист отдыхает вне игрового поля.
    * Стратегия игрока не может им управлять.
    */
-  val Resting = Value("RESTING")
+  val Resting = Value(3)
 }

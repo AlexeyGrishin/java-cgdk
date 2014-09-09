@@ -1,7 +1,7 @@
-import model2.Game;
-import model2.Hockeyist;
-import model2.Move;
-import model2.PlayerContext;
+import model.Game;
+import model.Hockeyist;
+import model.Move;
+import model.PlayerContext;
 
 import java.io.IOException;
 

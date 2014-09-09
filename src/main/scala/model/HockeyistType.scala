@@ -1,4 +1,4 @@
-package model2
+package model
 
 /**
  * Тип хоккеиста.
@@ -22,12 +22,12 @@ object HockeyistType extends NullableEnumeration {
    * <p/>
    * Вратарь единственный среди хоккеистов взаимодействует с шайбой напрямую (как физический объект).
    */
-  val Goalie = Value("GOALIE")
+  val Goalie = Value(0)
 
   /**
    * Хоккеист со сбалансированными параметрами.
    */
-  val Versatile = Value("VERSATILE")
+  val Versatile = Value(1)
 
   /**
    * Нападающий.
@@ -35,7 +35,7 @@ object HockeyistType extends NullableEnumeration {
    * Хоккеист, основным достоинством которого является сила удара.
    * Его слабой стороной является стойкость.
    */
-  val Forward = Value("FORWARD")
+  val Forward = Value(2)
 
   /**
    * Защитник.
@@ -43,10 +43,10 @@ object HockeyistType extends NullableEnumeration {
    * Хоккеист, основным достоинством которого является стойкость.
    * Его слабой стороной является точность удара.
    */
-  val Defenceman = Value("DEFENCEMAN")
+  val Defenceman = Value(3)
 
   /**
    * Хоккеист со случайными параметрами.
    */
-  val Random = Value("RANDOM")
+  val Random = Value(4)
 }

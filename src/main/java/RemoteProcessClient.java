@@ -1,4 +1,4 @@
-import model2.*;
+import model.*;
 import scala.Enumeration;
 
 import java.io.*;
@@ -92,14 +92,14 @@ public final class RemoteProcessClient implements Closeable {
                 } else {
                     writeBoolean(true);
 
-                    writeDouble(move.getSpeedUp());
-                    writeDouble(move.getTurn());
-                    writeEnum(move.getAction());
-                    if (move.getAction() == ActionType.Pass()) {
-                        writeDouble(move.getPassPower());
-                        writeDouble(move.getPassAngle());
-                    } else if (move.getAction() == ActionType.Substitute()) {
-                        writeInt(move.getTeammateIndex());
+                    writeDouble(move.speedUp());
+                    writeDouble(move.turn());
+                    writeEnum(move.action());
+                    if (move.action() == ActionType.Pass()) {
+                        writeDouble(move.passPower());
+                        writeDouble(move.passAngle());
+                    } else if (move.action() == ActionType.Substitute()) {
+                        writeInt(move.teammateIndex());
                     }
                 }
             }
@@ -166,9 +166,9 @@ public final class RemoteProcessClient implements Closeable {
 
         return new Hockeyist(
                 readLong(), readLong(), readInt(), readDouble(), readDouble(), readDouble(), readDouble(),
-                readDouble(), readDouble(), readDouble(), readDouble(), readBoolean(), HockeyistType.restore(readEnum()),
-                readInt(), readInt(), readInt(), readInt(), readDouble(), HockeyistState.restore(readEnum()),
-                readInt(), readInt(), readInt(), readInt(), ActionType.restore(readEnum()), readBoolean() ? readInt() : null
+                readDouble(), readDouble(), readDouble(), readDouble(), readBoolean(), HockeyistType.apply(readEnum()),
+                readInt(), readInt(), readInt(), readInt(), readDouble(), HockeyistState.apply(readEnum()),
+                readInt(), readInt(), readInt(), readInt(), ActionType.restoreOpt(readEnum()), readBoolean() ? readInt() : null
         );
     }
 

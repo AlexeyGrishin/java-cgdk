@@ -1,6 +1,6 @@
 import java.lang.StrictMath._
 
-import model2._
+import model._
 
 class MyStrategy extends Strategy {
 
