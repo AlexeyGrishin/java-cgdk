@@ -1,7 +1,11 @@
 @echo off
 for %%X in (javac.exe) do (set JAVA_FOUND=%%~$PATH:X)
 for %%X in (scalac.bat) do (set SCALA_FOUND=%%~$PATH:X)
-for %%X in (scala-library.jar) do (set SCALA_LIB_FOUND=%%~$CLASSPATH:X)
+
+if not exist "%SCALA_HOME%\scala-library.jar" (
+    echo Unable to find 'scala-library.jar' in SCALA_HOME ["%SCALA_HOME%"]
+    exit 1
+)
 
 
 if "%JAVA_FOUND%"=="" (
@@ -11,11 +15,6 @@ if "%JAVA_FOUND%"=="" (
 
 if "%SCALA_FOUND%"=="" (
     echo "Cannot find 'scala.bat'. Make sure it is in PATH and 'scala-library.jar' is in classpath" > compilation.log
-    exit 1
-)
-
-if "%SCALA_LIB_FOUND%"=="" (
-    echo "Cannot find 'scala-library.jar'. Make sure it is in CLASSPATH" > compilation.log
     exit 1
 )
 
@@ -39,7 +38,7 @@ if not exist classes\MyStrategy.class (
     exit 1
 )
 
-javac -encoding UTF-8 -sourcepath "src/main/java" -classpath "classes;scala-library.jar" -d classes "src/main/java/Runner.java" > compilation.log
+javac -encoding UTF-8 -sourcepath "src/main/java" -classpath "classes;%SCALA_HOME%\scala-library.jar" -d classes "src/main/java/Runner.java" > compilation.log
 
 if not exist classes\Runner.class (
     echo Unable to find classes\Runner.class >> compilation.log
@@ -47,5 +46,3 @@ if not exist classes\Runner.class (
 )
 
 jar cvfe "./scala-cgdk.jar" Runner -C "./classes" .
-
-:end
